@@ -234,12 +234,12 @@ def adminlist(bot, update):
     
     administrators = chatP.get_administrators()
 
-    text = tld(chat.id, "الادمنز في") + " *{}*:".format(chatP.title or tld(chat.id, "this chat"))
+    text = tld(chat.id, "قائمةالمسئولين في") + " *{}*:".format(chatP.title or tld(chat.id, "this chat"))
     for admin in administrators:
         user = admin.user
         status = admin.status
         if status == "creator":
-            name = user.first_name + (user.last_name or "") + tld(chat.id, " (Creator)")
+            name = user.first_name + (user.last_name or "") + tld(chat.id, " (المنشئ)")
         else:
             name = user.first_name + (user.last_name or "")
         text += f"\n• `{name}`"
@@ -271,14 +271,14 @@ def reaction(bot: Bot, update: Update, args: List[str]) -> str:
         
 
 __help__ = """
- - /adminlist | /admins: يظهر قائمة الادمنز في الجروب
+ - /adminlist | /admins: يظهر قائمة المسؤلين في الجروب
 
 *Admin only:*
- - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
- - /unpin: unpins the currently pinned message
- - /invitelink: gets invitelink
- - /promote: promotes the user replied to
- - /demote: demotes the user replied to
+ - /pin: يقوم بتثبيت الرسالة التي تم الرد عليها بشكل صامت قم باضافة 'loud' او 'notify' حتي يتم اعلام الاعضاء
+ - /unpin: إلغاء تثبيت الرسالة المثبتة حاليًا
+ - /invitelink: الحصول على رابط الدعوة
+ - /promote: يرفع درجة المستخدم الذي تم رد عليه
+ - /demote: ينزل درجة المستخدم الذي تم رد عليه
 """
 
 __mod_name__ = "Admin"

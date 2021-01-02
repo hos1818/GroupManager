@@ -57,7 +57,7 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
           "\n<b>• ID:</b> <code>{}</code>".format(html.escape(chat.title), mention_html(user.id, user.first_name), 
                                                   mention_html(member.user.id, member.user.first_name), user_id)
 
-    reply = "{} has been banned!".format(mention_html(member.user.id, member.user.first_name))
+    reply = "{} تم حظر!".format(mention_html(member.user.id, member.user.first_name))
 
     if reason:
         log += "\n<b>Reason:</b> {}".format(reason)
@@ -65,14 +65,14 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         chat.kick_member(user_id)
         #bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
-        message.reply_text(tld(chat.id, "Banned!"))
+        message.reply_text(tld(chat.id, "تم الحظر!"))
         return log
 
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
             #bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
-            message.reply_text(tld(chat.id, "Banned!"), quote=False)
+            message.reply_text(tld(chat.id, "تم الحظر!"), quote=False)
             return log
         else:
             LOGGER.warning(update)
@@ -364,24 +364,24 @@ def sban(bot: Bot, update: Update, args: List[str]) -> str:
 
 
 __help__ = """
-Some people need to be publicly banned; spammers, annoyances, or just trolls.
+يجب حظر بعض الأشخاص علنًا ؛ مرسلي البريد العشوائي أو المضايقات
 
-This module allows you to do that easily, by exposing some common actions, so everyone will see!
+تتيح لك هذه الوحدة القيام بذلك بسهولة ، من خلال عرض بعض الإجراءات الشائعة ، حتى يراها الجميع!
 
 Available commands are:
- - /ban: bans a user from your chat.
- - /banme: ban yourself
- - /tban: temporarily bans a user from your chat. set time using int<d/h/m> (days hours minutes)
- - /unban: unbans a user from your chat.
- - /sban: silently bans a user. (via handle, or reply)
- - /mute: mute a user in your chat.
- - /tmute: temporarily mute a user in your chat. set time using int<d/h/m> (days hours minutes)
- - /unmute: unmutes a user from your chat.
- - /kick: kicks a user from your chat.
- - /kickme: users who use this, kick themselves!
+ - /ban: يحظر مستخدمًا
+ - /banme: احظر نفسك
+ - /tban: يحظر مؤقتًا مستخدمًا من الدردشة.يتم ضبط الوقت باستخدام int <d / h / m> (أيام ساعات دقائق)
+ - /unban: يقوم بإلغاء حظر مستخدم
+ - /sban: يحظر مستخدمًا بشكل صامت
+ - /mute: كتم صوت المستخدم
+ - /tmute: كتم صوت مستخدم مؤقتًا في الدردشة. ضبط الوقت باستخدام int <d / h / m> (أيام ساعات دقائق)
+ - /unmute: الغاء كتم صوت المستخدم
+ - /kick: طرد المستخدم من الدردشة.
+ - /kickme: المستخدم الذي يستخدم هذا ، يطرد نفسه من الدردشة!
 
- An example of temporarily muting someone:
-/tmute @username 2h; this mutes a user for 2 hours.
+ مثال على كتم صوت شخص ما بشكل مؤقت:
+/tmute @username 2h; هذا يكتم المستخدم لمدة ساعتين.
 """
 
 __mod_name__ = "Bans"

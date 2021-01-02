@@ -43,7 +43,7 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
     if user_id == bot.id:
-        message.reply_text(tld(chat.id, "I'm not muting myself!"))
+        message.reply_text(tld(chat.id, "انا اكتم نفسي!"))
         return ""
 
     member = chatD.get_member(int(user_id))
@@ -59,7 +59,7 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
         elif member.can_send_messages is None or member.can_send_messages:
             bot.restrict_chat_member(chatD.id, user_id, can_send_messages=False)
             keyboard = []
-            reply = tld(chat.id, "{} is muted in {}!").format(mention_html(member.user.id, member.user.first_name), chatD.title)
+            reply = tld(chat.id, "{} تم كتمة في {}!").format(mention_html(member.user.id, member.user.first_name), chatD.title)
             message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
             return "<b>{}:</b>" \
                    "\n#MUTE" \
@@ -69,9 +69,9 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
                                               mention_html(member.user.id, member.user.first_name))
 
         else:
-            message.reply_text(tld(chat.id, "This user is already muted in {}!").format(chatD.title))
+            message.reply_text(tld(chat.id, "هذا المستخدم تم كتمة بالفعل في {}!").format(chatD.title))
     else:
-        message.reply_text(tld(chat.id, "This user isn't in the {}!").format(chatD.title))
+        message.reply_text(tld(chat.id, "هذا المستخدم ليس موجود في {}!").format(chatD.title))
 
     return ""
 
@@ -430,12 +430,12 @@ def muteme(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat
     user = update.effective_user
     if is_user_admin(update.effective_chat, user_id):
-        update.effective_message.reply_text("I wish I could... but you're an admin.")
+        update.effective_message.reply_text("انا اتمني لو استطيع ... ولاكن انت مسئول")
         return
 
     res = bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
     if res:
-        update.effective_message.reply_text("No problem, Muted!")
+        update.effective_message.reply_text("لا يوجد مشكلة, تم الكتم!")
         log = "<b>{}:</b>" \
               "\n#MUTEME" \
               "\n<b>User:</b> {}" \
@@ -444,7 +444,7 @@ def muteme(bot: Bot, update: Update, args: List[str]) -> str:
         return log
 
     else:
-        update.effective_message.reply_text("Huh? I can't :/")
+        update.effective_message.reply_text("ماذا؟ لا استطيع :/")
 
 
 MUTE_HANDLER = DisableAbleCommandHandler("mute", mute, pass_args=True, admin_ok=True)
