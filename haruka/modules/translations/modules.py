@@ -1,5 +1,5 @@
 """
- - /adminlist | /admins: list of admins in the chat
+ - /adminlist | /admins: يظهر قائمة الادمنز في الجروب
 
 *Admin only:*
  - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
