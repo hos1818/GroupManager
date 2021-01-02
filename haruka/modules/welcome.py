@@ -50,7 +50,7 @@ def send(update, message, keyboard, backup_message):
         msg = update.effective_message.reply_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard, disable_web_page_preview=True)
     except IndexError:
         msg = update.effective_message.reply_text(markdown_parser(backup_message +
-                                                                  "\nNote: the current message was "
+                                                                  "\nملاحظة: الرسالة الحالية كانت "
                                                                   "invalid due to markdown issues. Could be "
                                                                   "due to the user's name."),
                                                   parse_mode=ParseMode.MARKDOWN)
@@ -113,7 +113,7 @@ def new_member(bot: Bot, update: Update):
                     "I have been added to {} with ID: <pre>{}</pre>".format(chat.title, chat.id),
                     parse_mode=ParseMode.HTML
                 )
-                bot.send_message(chat.id, "Thanks for adding me into your group! Don't forgot to checkout our news channel!")
+                bot.send_message(chat.id, "شكرا لإضافتي إلى مجموعتك! لا تنس التحقق من قناتنا!")
 
             else:
                 # If welcome message is media, send with appropriate function

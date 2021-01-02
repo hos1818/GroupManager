@@ -39,7 +39,7 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text(tld(chat.id, "You'll need to either give me a username to mute, or reply to someone to be muted."))
+        message.reply_text(tld(chat.id, "ستحتاج إما إلى إعطائي اسم مستخدم للكتم ، أو الرد على رسالة شخص ما ليتم كتمه."))
         return ""
 
     if user_id == bot.id:
@@ -54,7 +54,7 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
             message.reply_text(tld(chat.id, "No! I'm not muting bot sudoers! That would be a pretty dumb idea."))
 
         elif is_user_admin(chatD, user_id, member=member):
-            message.reply_text(tld(chat.id, "No! I'm not muting chat administrator! That would be a pretty dumb idea."))
+            message.reply_text(tld(chat.id, "لا! أنا لا أكتم صوت مشرف المجموعة! ستكون فكرة غبية جدا"))
 
         elif member.can_send_messages is None or member.can_send_messages:
             bot.restrict_chat_member(chatD.id, user_id, can_send_messages=False)
@@ -97,7 +97,7 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text(tld(chat.id, "You'll need to either give me a username to unmute, or reply to someone to be unmuted."))
+        message.reply_text(tld(chat.id, "ستحتاج إما إلى إعطائي اسم مستخدم لإلغاء كتم الصوت ، أو الرد على رسالة شخص ما لإلغاء الكتم."))
         return ""
 
     member = chatD.get_member(int(user_id))
@@ -105,7 +105,7 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
     if member.status != 'kicked' and member.status != 'left':
         if member.can_send_messages and member.can_send_media_messages \
                 and member.can_send_other_messages and member.can_add_web_page_previews:
-            message.reply_text(tld(chat.id, "This user already has the right to speak in {}.").format(chatD.title))
+            message.reply_text(tld(chat.id, "هذا المستخدم لديه بالفعل الحق في التحدث في {}.").format(chatD.title))
         else:
             bot.restrict_chat_member(chatD.id, int(user_id),
                                      can_send_messages=True,
@@ -113,7 +113,7 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
                                      can_send_other_messages=True,
                                      can_add_web_page_previews=True)
             keyboard = []
-            reply = tld(chat.id, "Yep, {} can start talking again in {}!").format(mention_html(member.user.id, member.user.first_name), chatD.title)
+            reply = tld(chat.id, "نعم, {} يمكنة بدأ الحديث مرة أخرى في {}!").format(mention_html(member.user.id, member.user.first_name), chatD.title)
             message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
             return "<b>{}:</b>" \
                    "\n#UNMUTE" \
@@ -123,8 +123,8 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
                                                            mention_html(user.id, user.first_name),
                                                            mention_html(member.user.id, member.user.first_name), user_id)
     else:
-        message.reply_text(tld(chat.id, "This user isn't even in the chat, unmuting them won't make them talk more than they "
-                           "already do!"))
+        message.reply_text(tld(chat.id, "هذا المستخدم ليس موجودًا حتى في المجموعة ، ولن يؤدي إلغاء كتم صوته إلى جعله يتحدث أكثر من "
+                           "ما تحدث!"))
 
     return ""
 
@@ -151,28 +151,28 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text(tld(chat.id, "You don't seem to be referring to a user."))
+        message.reply_text(tld(chat.id, "لا يبدو أنك تشير إلى مستخدم."))
         return ""
 
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
-            message.reply_text(tld(chat.id, "I can't seem to find this user"))
+            message.reply_text(tld(chat.id, "لا يمكنني العثور على هذا المستخدم"))
             return ""
         else:
             raise
 
     if is_user_admin(chat, user_id, member):
-        message.reply_text(tld(chat.id, "I really wish I could mute admins..."))
+        message.reply_text(tld(chat.id, "أتمنى حقًا أن أتمكن من كتم صوت المسؤولين ..."))
         return ""
 
     if user_id == bot.id:
-        message.reply_text(tld(chat.id, "I'm not gonna MUTE myself, are you crazy?"))
+        message.reply_text(tld(chat.id, "لن أكتم نفسي ، هل أنت مجنون؟"))
         return ""
 
     if not reason:
-        message.reply_text(tld(chat.id, "You haven't specified a time to mute this user for!"))
+        message.reply_text(tld(chat.id, "لم تحدد وقتًا لكتم صوت هذا المستخدم!"))
         return ""
 
     split_reason = reason.split(None, 1)
@@ -200,21 +200,21 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         if member.can_send_messages is None or member.can_send_messages:
             bot.restrict_chat_member(chat.id, user_id, until_date=mutetime, can_send_messages=False)
-            message.reply_text(tld(chat.id, "Muted for {} in {}!").format(time_val, chatD.title))
+            message.reply_text(tld(chat.id, "تم الكتم بسبب {} في {}!").format(time_val, chatD.title))
             return log
         else:
-            message.reply_text(tld(chat.id, "This user is already muted in {}!").format(chatD.title))
+            message.reply_text(tld(chat.id, "تم كتم صوت هذا المستخدم بالفعل في {}!").format(chatD.title))
 
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
-            message.reply_text(tld(chat.id, "Muted for {} in {}!").format(time_val, chatD.title), quote=False)
+            message.reply_text(tld(chat.id, "تم الكتم بسبب {} في {}!").format(time_val, chatD.title), quote=False)
             return log
         else:
             LOGGER.warning(update)
             LOGGER.exception("ERROR muting user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
                              excp.message)
-            message.reply_text(tld(chat.id, "Well damn, I can't mute that user."))
+            message.reply_text(tld(chat.id, "حسنًا ، لا يمكنني كتم صوت هذا المستخدم."))
 
     return ""
 
@@ -239,18 +239,18 @@ def nomedia(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text(tld(chat.id, "You'll need to either give me a username to restrict, or reply to someone to be restricted."))
+        message.reply_text(tld(chat.id, "ستحتاج إما إلى إعطائي اسم مستخدم لتقييده أو الرد على شخص ما ليتم تقييده."))
         return ""
 
     if user_id == bot.id:
-        message.reply_text(tld(chat.id, "I'm not restricting myself!"))
+        message.reply_text(tld(chat.id, "أنا لن أقيد نفسي!"))
         return ""
 
     member = chatD.get_member(int(user_id))
 
     if member:
         if is_user_admin(chatD, user_id, member=member):
-            message.reply_text(tld(chat.id, "Afraid I can't restrict admins!"))
+            message.reply_text(tld(chat.id, "خائف من أنني لا أستطيع تقييد المشرفين!"))
 
         elif member.can_send_messages is None or member.can_send_messages:
             bot.restrict_chat_member(chatD.id, user_id, can_send_messages=True,
@@ -258,7 +258,7 @@ def nomedia(bot: Bot, update: Update, args: List[str]) -> str:
                                      can_send_other_messages=False,
                                      can_add_web_page_previews=False)
             keyboard = []
-            reply = tld(chat.id, "{} is restricted from sending media in {}!").format(mention_html(member.user.id, member.user.first_name), chatD.title)
+            reply = tld(chat.id, "{} محظور من إرسال الوسائط في {}!").format(mention_html(member.user.id, member.user.first_name), chatD.title)
             message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
             return "<b>{}:</b>" \
                    "\n#RESTRICTED" \
@@ -269,9 +269,9 @@ def nomedia(bot: Bot, update: Update, args: List[str]) -> str:
                                               mention_html(member.user.id, member.user.first_name), user_id)
 
         else:
-            message.reply_text(tld(chat.id, "This user is already restricted in {}!"))
+            message.reply_text(tld(chat.id, "هذا المستخدم مقيد بالفعل في {}!"))
     else:
-        message.reply_text(tld(chat.id, "This user isn't in the {}!").format(chatD.title))
+        message.reply_text(tld(chat.id, "هذا المستخدم ليس في {}!").format(chatD.title))
 
     return ""
 
@@ -296,7 +296,7 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text(tld(chat.id, "You'll need to either give me a username to unrestrict, or reply to someone to be unrestricted."))
+        message.reply_text(tld(chat.id, "ستحتاج إما إلى إعطائي اسم مستخدم لإلغاء تقييده ، أو الرد على شخص ما لإلغاء تقييده."))
         return ""
 
     member = chatD.get_member(int(user_id))
@@ -304,7 +304,7 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
     if member.status != 'kicked' and member.status != 'left':
         if member.can_send_messages and member.can_send_media_messages \
                 and member.can_send_other_messages and member.can_add_web_page_previews:
-            message.reply_text(tld(chat.id, "This user already has the rights to send anything in {}.").format(chatD.title))
+            message.reply_text(tld(chat.id, "هذا المستخدم لديه بالفعل الحق في إرسال أي شيء {}.").format(chatD.title))
         else:
             bot.restrict_chat_member(chatD.id, int(user_id),
                                      can_send_messages=True,
@@ -312,7 +312,7 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
                                      can_send_other_messages=True,
                                      can_add_web_page_previews=True)
             keyboard = []
-            reply = tld(chat.id, "Yep, {} can send media again in {}!").format(mention_html(member.user.id, member.user.first_name), chatD.title)
+            reply = tld(chat.id, "نعم, {} يمكنة إرسال الوسائط مرة أخرى في {}!").format(mention_html(member.user.id, member.user.first_name), chatD.title)
             message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
             return "<b>{}:</b>" \
                    "\n#UNRESTRICTED" \
@@ -322,8 +322,8 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
                                                            mention_html(user.id, user.first_name),
                                                            mention_html(member.user.id, member.user.first_name), user_id)
     else:
-        message.reply_text(tld(chat.id, "This user isn't even in the chat, unrestricting them won't make them send anything than they "
-                           "already do!"))
+        message.reply_text(tld(chat.id, "هذا المستخدم ليس موجودًا حتى في المجموعة ، ولن يؤدي عدم تقييده إلى جعله يرسل أي شيء غير "
+                           "الذي ارسلة!"))
 
     return ""
 
@@ -350,28 +350,28 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text(tld(chat.id, "You don't seem to be referring to a user."))
+        message.reply_text(tld(chat.id, "لا يبدو أنك تشير إلى مستخدم."))
         return ""
 
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
-            message.reply_text(tld(chat.id, "I can't seem to find this user"))
+            message.reply_text(tld(chat.id, "لا يمكنني العثور على هذا المستخدم"))
             return ""
         else:
             raise
 
     if is_user_admin(chat, user_id, member):
-        message.reply_text(tld(chat.id, "I really wish I could restrict admins..."))
+        message.reply_text(tld(chat.id, "أتمنى حقًا أن أتمكن من تقييد المشرفين ..."))
         return ""
 
     if user_id == bot.id:
-        message.reply_text(tld(chat.id, "I'm not gonna RESTRICT myself, are you crazy?"))
+        message.reply_text(tld(chat.id, "لن أقيد نفسي ، هل أنت مجنون؟"))
         return ""
 
     if not reason:
-        message.reply_text(tld(chat.id, "You haven't specified a time to restrict this user for!"))
+        message.reply_text(tld(chat.id, "لم تحدد وقتًا لتقييد هذا المستخدم به!"))
         return ""
 
     split_reason = reason.split(None, 1)
@@ -403,21 +403,21 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
                                      can_send_media_messages=False,
                                      can_send_other_messages=False,
                                      can_add_web_page_previews=False)
-            message.reply_text(tld(chat.id, "Restricted from sending media for {} in {}!").format(time_val, chatD.title))
+            message.reply_text(tld(chat.id, "ممنوع من إرسال الوسائط لـ {} في {}!").format(time_val, chatD.title))
             return log
         else:
-            message.reply_text(tld(chat.id, "This user is already restricted in {}.").format(chatD.title))
+            message.reply_text(tld(chat.id, "هذا المستخدم مقيد بالفعل في {}.").format(chatD.title))
 
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
-            message.reply_text(tld(chat.id, "Restricted for {} in {}!").format(time_val, chatD.title), quote=False)
+            message.reply_text(tld(chat.id, "مقيد بـسبب {} في {}!").format(time_val, chatD.title), quote=False)
             return log
         else:
             LOGGER.warning(update)
             LOGGER.exception("ERROR muting user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
                              excp.message)
-            message.reply_text(tld(chat.id, "Well damn, I can't restrict that user."))
+            message.reply_text(tld(chat.id, "حسنًا ، لا يمكنني تقييد هذا المستخدم."))
 
     return ""
 
@@ -430,7 +430,7 @@ def muteme(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat
     user = update.effective_user
     if is_user_admin(update.effective_chat, user_id):
-        update.effective_message.reply_text("انا اتمني لو استطيع ... ولاكن انت مسئول")
+        update.effective_message.reply_text("انا اتمني لو استطيع ... ولاكن انت مشرف")
         return
 
     res = bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)

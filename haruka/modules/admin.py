@@ -35,22 +35,22 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
             exit(1)
 
     if not chatD.get_member(bot.id).can_promote_members:
-        update.effective_message.reply_text("I can't promote/demote people here! "
-                                            "Make sure I'm admin and can appoint new admins.")
+        update.effective_message.reply_text("لا يمكنني ترقية / تخفيض رتبة الناس هنا! "
+                                            "تأكد من أنني مشرف ويمكنني تعيين مشرفين جدد.")
         exit(1)
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text(tld(chat.id, "You don't seem to be referring to a user."))
+        message.reply_text(tld(chat.id, "لا يبدو أنك تشير إلى مستخدم."))
         return ""
 
     user_member = chatD.get_member(user_id)
     if user_member.status == 'administrator' or user_member.status == 'creator':
-        message.reply_text(tld(chat.id, "How am I meant to promote someone that's already an admin?"))
+        message.reply_text(tld(chat.id, "كيف أقوم بترقية شخص يعمل كمشرف بالفعل؟"))
         return ""
 
     if user_id == bot.id:
-        message.reply_text(tld(chat.id, "I can't promote myself! Get an admin to do it for me."))
+        message.reply_text(tld(chat.id, "لا يمكنني ترقية نفسي! اجعل مشرف يقوم بذلك من أجلي."))
         return ""
 
     # set same perms as bot - bot can't assign higher perms than itself!
@@ -66,7 +66,7 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
                           can_pin_messages=bot_member.can_pin_messages,
                           can_promote_members=bot_member.can_promote_members)
 
-    message.reply_text(tld(chat.id, f"Successfully promoted in *{chatD.title}*!"), parse_mode=ParseMode.MARKDOWN)
+    message.reply_text(tld(chat.id, f"تمت الترقية بنجاح في *{chatD.title}*!"), parse_mode=ParseMode.MARKDOWN)
     return f"<b>{html.escape(chatD.title)}:</b>" \
             "\n#PROMOTED" \
            f"\n<b>Admin:</b> {mention_html(user.id, user.first_name)}" \
@@ -90,26 +90,26 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
             exit(1)
 
     if not chatD.get_member(bot.id).can_promote_members:
-        update.effective_message.reply_text("I can't promote/demote people here! "
-                                            "Make sure I'm admin and can appoint new admins.")
+        update.effective_message.reply_text("ا يمكنني ترقية / تخفيض رتبة الناس هنا! "
+                                            "تأكد من أنني مشرف ويمكنني تعيين مشرفين جدد.")
         exit(1)
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text(tld(chat.id, "You don't seem to be referring to a user."))
+        message.reply_text(tld(chat.id, "ا يبدو أنك تشير إلى مستخدم."))
         return ""
 
     user_member = chatD.get_member(user_id)
     if user_member.status == 'creator':
-        message.reply_text(tld(chat.id, "This person CREATED the chat, how would I demote them?"))
+        message.reply_text(tld(chat.id, "هذا الشخص هو من أنشأ هذه المجموعة ، كيف سأخفض رتبتة؟"))
         return ""
 
     if not user_member.status == 'administrator':
-        message.reply_text(tld(chat.id, "Can't demote what wasn't promoted!"))
+        message.reply_text(tld(chat.id, "لا يمكن تخفيضة ما لم يتم ترقيته!"))
         return ""
 
     if user_id == bot.id:
-        message.reply_text(tld(chat.id, "I can't demote myself!"))
+        message.reply_text(tld(chat.id, "لا أستطيع أن أخفض مرتبتي!"))
         return ""
 
     try:
@@ -122,7 +122,7 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                               can_restrict_members=False,
                               can_pin_messages=False,
                               can_promote_members=False)
-        message.reply_text(tld(chat.id, f"Successfully demoted in *{chatD.title}*!"), parse_mode=ParseMode.MARKDOWN)
+        message.reply_text(tld(chat.id, f"تم تخفيض الرتبة بنجاح في *{chatD.title}*!"), parse_mode=ParseMode.MARKDOWN)
         return f"<b>{html.escape(chatD.title)}:</b>" \
                 "\n#DEMOTED" \
                f"\n<b>Admin:</b> {mention_html(user.id, user.first_name)}" \
@@ -130,7 +130,7 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
 
     except BadRequest:
         message.reply_text(
-            tld(chat.id, "Could not demote. I might not be admin, or the admin status was appointed by another user, so I can't act upon them!")
+            tld(chat.id, "تعذر الخفض. قد لا أكون مشرف ، أو أن حالة المشرف تم تعيينها من قبل مستخدم آخر ، لذا لا يمكنني التصرف بناءً علي ذالك!")
             )
         return ""
 
@@ -215,9 +215,9 @@ def invite(bot: Bot, update: Update):
 
             update.effective_message.reply_text(invitelink)
         else:
-            update.effective_message.reply_text(tld(chat.id, "I don't have access to the invite link, try changing my permissions!"))
+            update.effective_message.reply_text(tld(chat.id, "لا يمكنني الوصول إلى رابط الدعوة ، حاول تغيير أذوناتي!"))
     else:
-        update.effective_message.reply_text(tld(chat.id, "I can only give you invite links for supergroups and channels, sorry!"))
+        update.effective_message.reply_text(tld(chat.id, "يمكنني فقط أن أعطيك روابط دعوة للمجموعات الكبرى والقنوات ، آسف!"))
 
 
 @run_async
@@ -234,7 +234,7 @@ def adminlist(bot, update):
     
     administrators = chatP.get_administrators()
 
-    text = tld(chat.id, "قائمةالمسئولين في") + " *{}*:".format(chatP.title or tld(chat.id, "this chat"))
+    text = tld(chat.id, "قائمة المشرفين في") + " *{}*:".format(chatP.title or tld(chat.id, "this chat"))
     for admin in administrators:
         user = admin.user
         status = admin.status
@@ -271,7 +271,7 @@ def reaction(bot: Bot, update: Update, args: List[str]) -> str:
         
 
 __help__ = """
- - /adminlist | /admins: يظهر قائمة المسؤلين في الجروب
+ - /adminlist | /admins: يظهر قائمة المشرفين في المجموعة
 
 *Admin only:*
  - /pin: يقوم بتثبيت الرسالة التي تم الرد عليها بشكل صامت قم باضافة 'loud' او 'notify' حتي يتم اعلام الاعضاء
