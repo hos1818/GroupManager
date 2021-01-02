@@ -5,6 +5,7 @@ from haruka.modules.translations.Ukraine import UkrainianStrings
 from haruka.modules.translations.Spanish import SpanishStrings
 from haruka.modules.translations.Turkish import TurkishStrings
 from haruka.modules.translations.Indonesian import IndonesianStrings
+from haruka.modules.translations.Arabic import ArabicStrings
 
 def tld(chat_id, t, show_none=True):
     LANGUAGE = prev_locale(chat_id)
@@ -13,6 +14,8 @@ def tld(chat_id, t, show_none=True):
         LOCALE = LANGUAGE.locale_name
         if LOCALE in ('ru') and t in RussianStrings:
            return RussianStrings[t]
+        elif LOCALE in ('ar') and t in ArabicStrings:
+            return ArabicStrings[t]
         elif LOCALE in ('ua') and t in UkrainianStrings:
             return UkrainianStrings[t]
         elif LOCALE in ('es') and t in SpanishStrings:
@@ -46,6 +49,8 @@ def tld_help(chat_id, t):
 
         if LOCALE in ('ru') and t in RussianStrings:
             return RussianStrings[t]
+        elif LOCALE in ('ar') and t in ArabicStrings:
+            return ArabicStrings[t]
         elif LOCALE in ('ua') and t in UkrainianStrings:
             return UkrainianStrings[t]
         elif LOCALE in ('es') and t in SpanishStrings:
