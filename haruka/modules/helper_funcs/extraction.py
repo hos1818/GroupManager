@@ -49,8 +49,8 @@ def extract_user_and_text(message: Message, args: List[str]) -> (Optional[int], 
         user = args[0]
         user_id = get_user_id(user)
         if not user_id:
-            message.reply_text("I don't have that user in my db. You'll be able to interact with them if "
-                               "you reply to that person's message instead, or forward one of that user's messages.")
+            message.reply_text("ليس لدي هذا المستخدم في قاعدة البيانات الخاصة بي. ستكون قادرًا على التفاعل معهم إذا "
+                               "ترد على رسالة ذلك الشخص بدلاً من ذلك ، أو تعيد توجيه إحدى رسائل هذا المستخدم.")
             return None, None
 
         else:
@@ -75,9 +75,9 @@ def extract_user_and_text(message: Message, args: List[str]) -> (Optional[int], 
         message.bot.get_chat(user_id)
     except BadRequest as excp:
         if excp.message in ("User_id_invalid", "Chat not found"):
-            message.reply_text("I don't seem to have interacted with this user before - please forward a message from "
-                               "them to give me control! (like a voodoo doll, I need a piece of them to be able "
-                               "to execute certain commands...)")
+            message.reply_text("لا يبدو أنني قد تفاعلت مع هذا المستخدم من قبل - يرجى إعادة توجيه رسالة منة "
+                               "لمنحي السيطرة! (أحتاج قطعة منهم لأتمكن من "
+                               "لتنفيذ الأوامر ...)")
         else:
             LOGGER.exception("Exception %s on user %s", excp.message, user_id)
 

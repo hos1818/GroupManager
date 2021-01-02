@@ -57,8 +57,8 @@ def bot_can_delete(func):
         if can_delete(update.effective_chat, bot.id):
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text("I can't delete messages here! "
-                                                "Make sure I'm admin and can delete other user's messages.")
+            update.effective_message.reply_text("لا يمكنني حذف الرسائل هنا! "
+                                                "تأكد من أنني مشرف ويمكنني حذف رسائل المستخدم الآخر.")
 
     return delete_rights
 
@@ -69,8 +69,8 @@ def can_pin(func):
         if update.effective_chat.get_member(bot.id).can_pin_messages:
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text("I can't pin messages here! "
-                                                "Make sure I'm admin and can pin messages.")
+            update.effective_message.reply_text("لا يمكنني تثبيت الرسائل هنا! "
+                                                "تأكد من أنني مشرف ويمكنني تثبيت الرسائل.")
 
     return pin_rights
 
@@ -81,8 +81,8 @@ def can_promote(func):
         if update.effective_chat.get_member(bot.id).can_promote_members:
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text("I can't promote/demote people here! "
-                                                "Make sure I'm admin and can appoint new admins.")
+            update.effective_message.reply_text("لا يمكنني ترقية / تخفيض رتبة الناس هنا! "
+                                                "تأكد من أنني مشرف ويمكنني تعيين مشرفين جدد.")
 
     return promote_rights
 
@@ -93,8 +93,8 @@ def can_restrict(func):
         if update.effective_chat.get_member(bot.id).can_restrict_members:
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text("I can't restrict people here! "
-                                                "Make sure I'm admin and can appoint new admins.")
+            update.effective_message.reply_text("لا يمكنني تقييد الناس هنا! "
+                                                "تأكد من أنني مشرف ويمكنني تعيين مشرفين جدد.")
 
     return promote_rights
 
@@ -105,7 +105,7 @@ def bot_admin(func):
         if is_bot_admin(update.effective_chat, bot.id):
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text("I'm not admin!")
+            update.effective_message.reply_text("أنا لست مشرف!")
 
     return is_admin
 
@@ -125,7 +125,7 @@ def user_admin(func):
             update.effective_message.delete()
 
         elif (admin_sql.command_reaction(chat.id) == True):
-            update.effective_message.reply_text("Who dis non-admin telling me what to do?")
+            update.effective_message.reply_text("من غير المشرف يخبرني ماذا أفعل؟ ")
 
     return is_admin
 
