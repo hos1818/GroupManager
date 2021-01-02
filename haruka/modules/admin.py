@@ -234,7 +234,7 @@ def adminlist(bot, update):
     
     administrators = chatP.get_administrators()
 
-    text = tld(chat.id, "Admins in") + " *{}*:".format(chatP.title or tld(chat.id, "this chat"))
+    text = tld(chat.id, "الادمنز في") + " *{}*:".format(chatP.title or tld(chat.id, "this chat"))
     for admin in administrators:
         user = admin.user
         status = admin.status
@@ -271,7 +271,7 @@ def reaction(bot: Bot, update: Update, args: List[str]) -> str:
         
 
 __help__ = """
- - /adminlist | /admins: list of admins in the chat
+ - /adminlist | /admins: يظهر قائمة الادمنز في الجروب
 
 *Admin only:*
  - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
